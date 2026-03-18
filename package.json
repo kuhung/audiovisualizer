@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "dat.gui": "^0.7.9",
     "lil-gui": "^0.20.0",
     "three": "^0.158.0"
