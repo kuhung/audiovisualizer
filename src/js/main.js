@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { inject } from '@vercel/analytics';
 import SceneManager from './core/SceneManager';
 import AudioManager from './audio/AudioManager';
 import GuiManager from './gui/GuiManager';
@@ -9,6 +10,9 @@ import PostProcessor from './effects/PostProcessor';
  * Initializes all modules (Scene, Audio, GUI, PostProcessing)
  * and runs the main animation loop.
  */
+
+// Initialize Vercel Analytics
+inject();
 
 console.log('main.js loaded');
 
