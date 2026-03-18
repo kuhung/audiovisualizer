@@ -259,6 +259,52 @@ export default class AudioManager {
         return 0; // Return 0 if no analyser is active
     }
 
+    /**
+     * Loads audio from a URL, decodes it, and starts playback.
+     * @param {string} url - The URL of the audio file to load.
+     */
+    async loadAndPlayUrl(url) {
+        console.log(`Attempting to load audio from URL: ${url}`);
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            const audioData = await response.arrayBuffer(); // Get data as ArrayBuffer
+
+            console.log(`Audio data fetched successfully from ${url}. Size: ${audioData.byteLength} bytes.`);
+
+            // --- Cleanup existing audio (similar to loadAndPlayFile) ---
+            if (this.sound.isPlaying) {
+                this.sound.stop();
+                console.log("Stopped previous sound for URL playback.");
+            }
+            if (this.audioAnalyser) {
+                if (this.audioAnalyser.analyser) {
+                   try {
+                       this.audioAnalyser.analyser.disconnect();
+                   } catch (error) {
+                       console.warn("Error disconnecting previous analyser before URL load:", error);
+                   }
+                }
+                this.audioAnalyser = null; 
+            }
+             // --- Stop microphone if active ---
+             this._disconnectMicrophone(); 
+
+            // --- Setup and Play ---
+            // Use the existing private method to handle decoding and playback
+             console.log("Calling _setupAndPlay for URL audio...");
+            await this._setupAndPlay(audioData); 
+            console.log(`Successfully started playback for ${url}.`);
+
+        } catch (error) {
+            console.error(`Error loading or playing audio from URL ${url}:`, error);
+            // Optionally show a user-friendly error message
+             alert(`无法从URL加载默认音频：${error.message}`);
+        }
+    }
+
     // --- Optional Playback Controls --- 
     // play() { 
     //     if (this.sound && !this.sound.isPlaying && this.sound.buffer) { 

@@ -4,12 +4,24 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perlin Noise X Vertex Shader</title>
+    <title>3D Audio Visualizer</title>
     <style>
         body {
             margin: 0;
         }
     </style>
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script>
+        // Dynamically inject Vercel Analytics script to avoid Parcel bundling
+        (function() {
+            var script = document.createElement('script');
+            script.defer = true;
+            script.src = '/_vercel/insights/script.js';
+            document.head.appendChild(script);
+        })();
+    </script>
 </head>
 <body>
     <script src="./js/main.js" type="module"></script>

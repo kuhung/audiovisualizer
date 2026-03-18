@@ -121,10 +121,10 @@ export default class SceneManager {
             this.uniforms.u_green.value, 
             this.uniforms.u_blue.value
         );
-        this.particleEffect = new ParticleEffect(this.scene, { 
-            particleCount: 50000,
+        this.particleEffect = new ParticleEffect(this.scene, {
+            particleCount: 200000, // 粒子数增加 (原为 50000)
             initialColor: initialColor // Pass the initial color object
-        }); 
+        });
     }
 
     /**

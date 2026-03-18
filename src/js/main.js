@@ -25,10 +25,10 @@ const effectParams = {
 	red: 1.0,       // Initial red color component for the shader
 	green: 1.0,     // Initial green color component
 	blue: 1.0,      // Initial blue color component
-	threshold: 0.5, // Initial bloom effect threshold
-	strength: 0.5,  // Initial bloom effect strength
+	threshold: 0.3, // Adjusted bloom effect threshold
+	strength: 0.25,  // Adjusted bloom effect strength
 	radius: 0.8,    // Initial bloom effect radius
-	visualEffect: 'particles' // Initial visual effect ('icosahedron' or 'particles')
+	visualEffect: 'icosahedron' // Change default to icosahedron
 };
 
 // --- Module Instances ---
@@ -71,6 +71,12 @@ function init() {
     
     // 2. Initialize Audio (needs the camera from SceneManager for the listener)
     audioManager = new AudioManager(sceneManager.getCamera()); 
+
+    // Load and play the default greeting audio
+    // Using .then() because loadAndPlayUrl is async, although we don't strictly need to wait here.
+    audioManager.loadAndPlayUrl('assets/multilingual_greetings.mp3')
+        .then(() => console.log('Default audio playback initiated.'))
+        .catch(err => console.error('Failed to initiate default audio playback:', err));
     
     // 3. Initialize Post-Processing (needs renderer, scene, camera, and initial params)
     postProcessor = new PostProcessor(
@@ -144,6 +150,8 @@ function init() {
 function setupEventListeners() {
     window.addEventListener('resize', onWindowResize);
     document.addEventListener('mousemove', onMouseMove);
+    // Add touch event listener for mobile compatibility
+    document.addEventListener('touchmove', onTouchMove, { passive: false }); 
     // Note: File input is now triggered via GuiManager and handled in init()
 }
 
@@ -173,6 +181,25 @@ function onMouseMove(event) {
     mouseX = (event.clientX - windowHalfX) / windowHalfX; // Normalize X
     mouseY = (event.clientY - windowHalfY) / windowHalfY; // Normalize Y (inverted for typical 3D coordinate systems)
     // Adjust sensitivity/scaling if needed: e.g., mouseX /= 2;
+}
+
+/**
+ * Handles touch movement events on mobile devices.
+ * Updates normalized mouse coordinates (mouseX, mouseY) based on the first touch point.
+ * Prevents default scroll behavior.
+ * @param {TouchEvent} event
+ */
+function onTouchMove(event) {
+    // Prevent the default touch action (like scrolling)
+    event.preventDefault(); 
+
+    if (event.touches.length > 0) {
+        const touch = event.touches[0]; // Get the first touch point
+        const windowHalfX = window.innerWidth / 2;
+        const windowHalfY = window.innerHeight / 2;
+        mouseX = (touch.clientX - windowHalfX) / windowHalfX; // Normalize X
+        mouseY = (touch.clientY - windowHalfY) / windowHalfY; // Normalize Y 
+    }
 }
 
 // --- Animation Loop ---

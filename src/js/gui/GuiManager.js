@@ -1,4 +1,4 @@
-import { GUI } from 'dat.gui';
+import { GUI } from 'lil-gui';
 
 /**
  * Manages the dat.gui interface for controlling visual parameters.
@@ -71,7 +71,7 @@ export default class GuiManager {
             }
         });
          // Link GUI control for 'strength' to params.strength
-        bloomFolder.add(this.params, 'strength', 0, 3).name('Strength').onChange((value) => {
+        bloomFolder.add(this.params, 'strength', 0, 1).name('Strength').onChange((value) => {
             if (this.callbacks.onBloomChange) {
                 this.callbacks.onBloomChange({ strength: Number(value) });
             }
