@@ -31,8 +31,17 @@
             document.head.appendChild(script);
         })();
     </script>
+    <style>
+      .site-backlink {
+        position: fixed; right: 12px; bottom: 10px; z-index: 50;
+        font: 11px/1.4 system-ui, -apple-system, sans-serif;
+        color: #888; opacity: .45; text-decoration: none;
+      }
+      .site-backlink:hover { opacity: .9; text-decoration: underline; }
+    </style>
 </head>
 <body>
     <script src="./js/main.js" type="module"></script>
+    <a class="site-backlink" href="https://kuhung.me/projects/">kuhung 的其它项目</a>
 </body>
 </html>
